@@ -1,0 +1,82 @@
+site_name: Ihsan
+site_url: https://example.com
+site_author: Mohamed Nesredin
+site_description: >-
+  Behold Ihsan Project
+
+repo_name: Mohamed-Kaizen/ihsan
+repo_url: https://github.com/Mohamed-Kaizen/ihsan/
+edit_uri: ''
+
+copyright: Copyright &copy; 2020 Mohamed Nesredin
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  icon:
+    repo: fontawesome/brands/github-alt
+  features:
+    - navigation.tabs
+    # - navigation.instant # uncommon this if you don't want SPA mode
+
+plugins:
+  - search
+  - macros
+  - git-authors:
+      show_contribution: true
+      show_line_count: true
+      count_empty_lines: true
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: timeago
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+      watch:
+        - src/ihsan
+
+nav:
+  - Home: 'index.md'
+  - Reference:
+      - Manage: "reference/manage.md"
+
+
+markdown_extensions:
+  - meta
+  - abbr
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - footnotes
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.smartsymbols
+  - attr_list
+  - def_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+
+
+extra_css:
+    - 'css/termynal.css'
+    - 'css/custom.css'
+
+extra_javascript:
+    - 'https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js'
+    - 'js/termynal.js'
+    - 'js/custom.js'
