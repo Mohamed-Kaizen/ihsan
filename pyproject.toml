@@ -18,6 +18,9 @@ include = [
 python = "^3.8"
 typer = {extras = ["all"], version = "^0.3.2"}
 rich = "^9.2.0"
+PyYAML = "^5.3.1"
+toml = "^0.10.2"
+pydantic = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
