@@ -2,7 +2,10 @@
 import typer
 from rich.console import Console
 
-from . import __version__
+from ihsan import __version__
+from ihsan.schema import IhsanType
+from ihsan.translation import to_sdl
+from ihsan.utils import read_adfh_file
 
 app = typer.Typer(help="Ihsan CLI.")
 
@@ -13,6 +16,44 @@ def version() -> None:
     console = Console()
     project_name = "Ihsan"
     console.print(f"{project_name} Version: {__version__}", style="bold green")
+
+
+@app.command("sdl")
+def sdl(
+    file: str,
+    output: str = typer.Option(None, help="save output into a file."),
+    folder: bool = typer.Option(False, help="Will open the out file folder."),
+) -> None:
+    """Generate SDL aka GraphQL schema from ADFH file.
+
+    Args:
+        file: Path to ADFH file.
+        output: If --output is used, it will save it in file.
+        folder: If --output and --folder is used, it will open the saved file.
+    """
+    console = Console()
+    data, is_error = read_adfh_file(file=file)
+
+    if is_error:
+        console.print(data, style="bold red")
+
+    else:
+        ihsan_type = IhsanType(**data)
+        sdl_output = to_sdl(data=ihsan_type)
+        if output:
+            typer.confirm(
+                f"The output will be saved in {output}, are you sure?", abort=True
+            )
+            with open(output, "w") as output_file:
+                output_file.write(sdl_output)
+            if folder:
+                typer.launch(output, locate=True)
+        else:
+            console.print(sdl_output, style="bold green")
+        console.print(
+            "Use -> https://app.graphqleditor.com/ to test the schema :)",
+            style="bold blue",
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover
