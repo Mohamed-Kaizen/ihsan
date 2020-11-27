@@ -46,8 +46,6 @@ def sdl(
             )
             with open(output, "w") as output_file:
                 output_file.write(sdl_output)
-            if folder:
-                typer.launch(output, locate=True)
         else:
             console.print(sdl_output, style="bold green")
         console.print(

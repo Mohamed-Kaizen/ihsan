@@ -1,11 +1,9 @@
-"""Test cases for the manage module."""
+"""Test cases for the translation module."""
 import pathlib
 
-from typer.testing import CliRunner
-
-from ihsan.manage import app
-
-runner = CliRunner()
+from ihsan.schema import IhsanType
+from ihsan.translation import to_sdl
+from ihsan.utils import read_adfh_file
 
 ADFH = """
 [adfh]
@@ -131,61 +129,25 @@ def create_adfh_file(*, directory_path: pathlib.PosixPath) -> None:
     (pathlib.Path(directory_path) / "adfh.toml").write_text(ADFH)
 
 
-def test_help_succeeds() -> None:
-    """It exits with a status code of zero."""
-    result = runner.invoke(app, ["--help"])
-    assert result.exit_code == 0
-    assert "version" in result.output
-
-
-def test_version_succeeds() -> None:
-    """It exits with a status code of zero."""
-    result = runner.invoke(app, ["version"])
-    assert result.exit_code == 0
-    assert "Ihsan" in result.stdout
-
-
-def test_sdl_succeeds(tmp_path: pathlib.PosixPath) -> None:
+def test_to_sdl_successfully(tmp_path: pathlib.PosixPath) -> None:
     """It exits with a status code of zero."""
     create_adfh_file(directory_path=tmp_path)
-    data = pathlib.Path(tmp_path) / "adfh.toml"
-    result = runner.invoke(app, ["sdl", data.as_posix()])
+    data, _ = read_adfh_file(file=pathlib.Path(tmp_path) / "adfh.toml")
+    ihsan_type = IhsanType(**data)
+    sdl_output = to_sdl(schema=ihsan_type)
 
-    assert "type Item" in result.stdout
-    assert "type Company" in result.stdout
-    assert "title: String!" in result.stdout
-    assert "id: String" in result.stdout
-    assert "is_done: Boolean" in result.stdout
-    assert "view: Int" in result.stdout
-    assert "type Query" in result.stdout
-    assert "todoList: [Item]" in result.stdout
-    assert "CompanyList: [Company]" in result.stdout
-    assert "type Mutation" in result.stdout
-    assert "todoAdd(title: String!, ): Item" in result.stdout
-    assert "companyRemove(id: String, ): Company" in result.stdout
-    assert "schema" in result.stdout
-    assert "query: Query" in result.stdout
-    assert "mutation: Mutation" in result.stdout
-
-
-def test_sdl_fail(tmp_path: pathlib.PosixPath) -> None:
-    """It exits with a status code of zero."""
-    data = pathlib.Path(tmp_path) / "adfh.toml"
-    result = runner.invoke(app, ["sdl", data.as_posix()])
-    assert "File doesn't exist." in result.stdout
-
-
-def test_sdl_output_succeeds(tmp_path: pathlib.PosixPath) -> None:
-    """It exits with a status code of zero."""
-    create_adfh_file(directory_path=tmp_path)
-    adfh_file = pathlib.Path(tmp_path) / "adfh.toml"
-    sdl_output_file = pathlib.Path(tmp_path) / "test_sdl.gql"
-    result = runner.invoke(
-        app,
-        ["sdl", adfh_file.as_posix(), "--output", sdl_output_file.as_posix()],
-        input="y\n",
-    )
-    assert (
-        "Use -> https://app.graphqleditor.com/ to test the schema :)" in result.stdout
-    )
-    assert sdl_output_file.exists() is True
+    assert "type Item" in sdl_output
+    assert "type Company" in sdl_output
+    assert "title: String!" in sdl_output
+    assert "id: String" in sdl_output
+    assert "is_done: Boolean" in sdl_output
+    assert "view: Int" in sdl_output
+    assert "type Query" in sdl_output
+    assert "todoList: [Item]" in sdl_output
+    assert "CompanyList: [Company]" in sdl_output
+    assert "type Mutation" in sdl_output
+    assert "todoAdd(title: String!, ): Item" in sdl_output
+    assert "companyRemove(id: String, ): Company" in sdl_output
+    assert "schema" in sdl_output
+    assert "query: Query" in sdl_output
+    assert "mutation: Mutation" in sdl_output

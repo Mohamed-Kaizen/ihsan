@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Tuple, Union
 
 import toml
 import yaml
+from pydantic import ValidationError
 
 from ihsan.schema import ADFHActionsType, ADFHFieldsType, ADFHModelsType
 
@@ -41,6 +42,21 @@ def sdl_data_type_converter(data: str) -> str:
     Args:
         data: ADFH data type.
 
+    Examples:
+        >>> from ihsan.utils import sdl_data_type_converter
+        >>> unique_id = sdl_data_type_converter(data="unique id")
+        >>> unique_id == "String"
+        True
+        >>> text = sdl_data_type_converter(data="text")
+        >>> text == "String"
+        True
+        >>> checkbox = sdl_data_type_converter(data="checkbox")
+        >>> checkbox == "Boolean"
+        True
+        >>> number = sdl_data_type_converter(data="number")
+        >>> number == "Int"
+        True
+
     Returns:
         SDL data type.
     """
@@ -66,7 +82,9 @@ def find_action(actions: List[ADFHActionsType], keyword: str) -> List[Dict[str, 
     return [action.dict() for action in actions if action.type == keyword]
 
 
-def find_field(fields: List[ADFHFieldsType], field_id: str) -> ADFHFieldsType:
+def find_field(
+    fields: List[ADFHFieldsType], field_id: str
+) -> Union[ADFHFieldsType, str]:
     """Search for a certain field.
 
     Args:
@@ -88,10 +106,16 @@ def find_field(fields: List[ADFHFieldsType], field_id: str) -> ADFHFieldsType:
                     "mandatory": "!" if field.mandatory == "yes" else "",
                 }
             )
-    return ADFHFieldsType(**field_dict)
+    try:
+        return ADFHFieldsType(**field_dict)
+
+    except ValidationError as error:
+        return error.json()
 
 
-def find_model(models: List[ADFHModelsType], model_id: str) -> ADFHModelsType:
+def find_model(
+    models: List[ADFHModelsType], model_id: str
+) -> Union[ADFHModelsType, str]:
     """Search for a certain model.
 
     Args:
@@ -105,4 +129,8 @@ def find_model(models: List[ADFHModelsType], model_id: str) -> ADFHModelsType:
     for field in models:
         if field.id == model_id:
             model_dict.update({"id": field.id, "name": field.name})
-    return ADFHModelsType(**model_dict)
+    try:
+        return ADFHModelsType(**model_dict)
+
+    except ValidationError as error:
+        return error.json()
