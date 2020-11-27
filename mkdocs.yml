@@ -43,6 +43,9 @@ nav:
   - Home: 'index.md'
   - Reference:
       - Manage: "reference/manage.md"
+      - Schema: "reference/schema.md"
+      - Translation: "reference/translation.md"
+      - Utils: "reference/utils.md"
 
 
 markdown_extensions:

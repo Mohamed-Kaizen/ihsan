@@ -39,15 +39,13 @@ def sdl(
 
     else:
         ihsan_type = IhsanType(**data)
-        sdl_output = to_sdl(data=ihsan_type)
+        sdl_output = to_sdl(schema=ihsan_type)
         if output:
             typer.confirm(
                 f"The output will be saved in {output}, are you sure?", abort=True
             )
             with open(output, "w") as output_file:
                 output_file.write(sdl_output)
-            if folder:
-                typer.launch(output, locate=True)
         else:
             console.print(sdl_output, style="bold green")
         console.print(
