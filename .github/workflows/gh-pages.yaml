@@ -25,7 +25,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip     # install pip
           python3 -m pip install mkdocs            # install mkdocs
-          python3 -m pip install mkdocs-material mkdocs-git-revision-date-plugin mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin mkdocs-git-authors-plugin mkdocs-features-notifier-plugin mkdocs-macros-plugin
+          python3 -m pip install mkdocs-material mkdocstrings mkdocs-git-revision-date-plugin mkdocs-git-revision-date-localized-plugin mkdocs-minify-plugin mkdocs-git-authors-plugin mkdocs-features-notifier-plugin mkdocs-macros-plugin
       - name: Build site
         run: mkdocs build
       - name: Deploy
