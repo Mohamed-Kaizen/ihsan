@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ihsan"
-version = "0.0.2"
+version = "0.0.3"
 description = "Behold Ihsan Project"
 authors = ["Mohamed Nesredin <m.n.kaizen@gmail.com>"]
 license = "MIT"
