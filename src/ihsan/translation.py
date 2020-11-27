@@ -4,7 +4,15 @@ from .utils import find_action, find_field, find_model
 
 
 def to_sdl(schema: IhsanType, indention: int = 4) -> str:
-    """Function that transfer ADFH into SDL aka GraphQL schema."""
+    """Function that transfer ADFH into SDL aka GraphQL schema.
+
+    Args:
+        schema: IhsanType model.
+        indention: The indention of the generated SDL.
+
+    Returns:
+        SDL aka Graphql schema.
+    """
     show_me_list = find_action(schema.adfh.actions, "show me list")
     let_me_remove = find_action(schema.adfh.actions, "let me remove")
     let_me_add = find_action(schema.adfh.actions, "let me add")

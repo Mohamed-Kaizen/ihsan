@@ -9,7 +9,14 @@ from ihsan.schema import ADFHActionsType, ADFHFieldsType, ADFHModelsType
 
 
 def read_adfh_file(file: str) -> Tuple[Union[Dict, str], bool]:
-    """Parse an ADFH file into dict."""
+    """Parse an ADFH file into dict.
+
+    Args:
+        file: Path to ADFH file.
+
+    Returns:
+        Tuple either with the data or an error message.
+    """
     file_path = pathlib.Path(file)
     file_name, file_extension = file_path.name.rsplit(".")
 
@@ -29,7 +36,14 @@ def read_adfh_file(file: str) -> Tuple[Union[Dict, str], bool]:
 
 
 def sdl_data_type_converter(data: str) -> str:
-    """Converting ADFH data type into sdl data type."""
+    """Converting ADFH data type into sdl data type.
+
+    Args:
+        data: ADFH data type.
+
+    Returns:
+        SDL data type.
+    """
     types = {
         "unique id": "String",
         "text": "String",
@@ -39,13 +53,29 @@ def sdl_data_type_converter(data: str) -> str:
     return types.get(data, "String")
 
 
-def find_action(actions: List[ADFHActionsType], command: str) -> List[Dict[str, Any]]:
-    """Search for a certain action."""
-    return [action.dict() for action in actions if action.type == command]
+def find_action(actions: List[ADFHActionsType], keyword: str) -> List[Dict[str, Any]]:
+    """Search for a certain action.
+
+    Args:
+        actions: List of ADFHActionsType model.
+        keyword: word or the action that has been required.
+
+    Returns:
+        List of selected actions.
+    """
+    return [action.dict() for action in actions if action.type == keyword]
 
 
 def find_field(fields: List[ADFHFieldsType], field_id: str) -> ADFHFieldsType:
-    """Search for a certain field."""
+    """Search for a certain field.
+
+    Args:
+        fields: List of ADFHFieldsType model.
+        field_id: The id of the field.
+
+    Returns:
+        ADFHFieldsType model.
+    """
     field_dict = {}
     for field in fields:
         if field.id == field_id:
@@ -62,7 +92,15 @@ def find_field(fields: List[ADFHFieldsType], field_id: str) -> ADFHFieldsType:
 
 
 def find_model(models: List[ADFHModelsType], model_id: str) -> ADFHModelsType:
-    """Search for a certain model."""
+    """Search for a certain model.
+
+    Args:
+        models: List of ADFHModelsType model.
+        model_id: The id of the model.
+
+    Returns:
+        ADFHModelsType model.
+    """
     model_dict = {}
     for field in models:
         if field.id == model_id:

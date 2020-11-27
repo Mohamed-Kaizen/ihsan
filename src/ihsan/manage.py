@@ -39,7 +39,7 @@ def sdl(
 
     else:
         ihsan_type = IhsanType(**data)
-        sdl_output = to_sdl(data=ihsan_type)
+        sdl_output = to_sdl(schema=ihsan_type)
         if output:
             typer.confirm(
                 f"The output will be saved in {output}, are you sure?", abort=True
