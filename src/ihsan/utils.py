@@ -61,10 +61,10 @@ def find_field(fields: List[ADFHFieldsType], field_id: str) -> ADFHFieldsType:
     return ADFHFieldsType(**field_dict)
 
 
-def find_model(fields: List[ADFHModelsType], model_id: str) -> ADFHModelsType:
+def find_model(models: List[ADFHModelsType], model_id: str) -> ADFHModelsType:
     """Search for a certain model."""
     model_dict = {}
-    for field in fields:
+    for field in models:
         if field.id == model_id:
             model_dict.update({"id": field.id, "name": field.name})
     return ADFHModelsType(**model_dict)
