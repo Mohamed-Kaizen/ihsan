@@ -22,14 +22,12 @@ def version() -> None:
 def sdl(
     file: str,
     output: str = typer.Option(None, help="save output into a file."),
-    folder: bool = typer.Option(False, help="Will open the out file folder."),
 ) -> None:
     """Generate SDL aka GraphQL schema from ADFH file.
 
     Args:
         file: Path to ADFH file.
         output: If --output is used, it will save it in file.
-        folder: If --output and --folder is used, it will open the saved file.
     """
     console = Console()
     data, is_error = read_adfh_file(file=file)

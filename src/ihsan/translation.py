@@ -1,6 +1,6 @@
 """Translator module where it change ADFH into json, SDL, openAPI, etc..."""
 from .schema import IhsanType
-from .utils import find_action, find_field, find_model
+from .utils import find_action, find_field, find_model, get_all_field_with_certain_type
 
 
 def to_sdl(schema: IhsanType, indention: int = 4) -> str:
@@ -16,7 +16,15 @@ def to_sdl(schema: IhsanType, indention: int = 4) -> str:
     show_me_list = find_action(schema.adfh.actions, "show me list")
     let_me_remove = find_action(schema.adfh.actions, "let me remove")
     let_me_add = find_action(schema.adfh.actions, "let me add")
+    choices = get_all_field_with_certain_type(schema.adfh.fields_list, "choice")
     text = ""
+    for choice in choices:
+        text += f"enum {choice.name.capitalize()}Type {'{'}\n"
+        for option in choice.options:
+            placeholder = f"{option.upper()}\n"
+            text += placeholder.rjust(len(placeholder) + indention)
+        text += "}\n"
+
     for model in schema.adfh.models:
         text += f"type {model.name} {'{'}\n"
 

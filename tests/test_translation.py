@@ -41,12 +41,12 @@ name = "is_done"
 type = "checkbox"
 mandatory = "no"
 
-#[[adfh.fields]]
-#id = "my awesome status" # this id only exist in ADFH file, make unique
-#name = "status"
-#type = "choice"
-#options = [ "rejected", "approved", "deny",]
-#mandatory = "no"
+[[adfh.fields]]
+id = "my awesome status" # this id only exist in ADFH file, make unique
+name = "status"
+type = "choice"
+options = [ "rejected", "approved", "deny",]
+mandatory = "no"
 
 [[adfh.fields]]
 id = "my awesome view" # this id only exist in ADFH file, make unique
@@ -67,6 +67,11 @@ assign = "my awesome id" # Assign the field for the model from adfh.fields.
 [[adfh.models.properties]]
 model = "my awesome Item"
 assign = "my awesome title"
+
+[[adfh.models.properties]]
+model = "my awesome Item"
+assign = "my awesome status"
+
 
 [[adfh.models]] # It the same as recored, class, database model, etc....
 id = "my awesome Company" # this id only exist in ADFH file, make unique
@@ -141,10 +146,15 @@ def test_to_sdl_successfully(tmp_path: pathlib.PosixPath) -> None:
     ihsan_type = IhsanType(**data)
     sdl_output = to_sdl(schema=ihsan_type)
 
+    assert "enum StatusType" in sdl_output
+    assert "REJECTED" in sdl_output
+    assert "APPROVED" in sdl_output
+    assert "DENY" in sdl_output
     assert "type Item" in sdl_output
     assert "type Company" in sdl_output
     assert "title: String!" in sdl_output
     assert "id: String" in sdl_output
+    assert "status: StatusType" in sdl_output
     assert "is_done: Boolean" in sdl_output
     assert "view: Int" in sdl_output
     assert "type Query" in sdl_output

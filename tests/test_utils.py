@@ -2,7 +2,13 @@
 import pathlib
 
 from ihsan.schema import IhsanType
-from ihsan.utils import find_action, find_field, find_model, read_adfh_file
+from ihsan.utils import (
+    find_action,
+    find_field,
+    find_model,
+    get_all_field_with_certain_type,
+    read_adfh_file,
+)
 
 TOML_ADFH = """
 [adfh]
@@ -40,12 +46,12 @@ name = "is_done"
 type = "checkbox"
 mandatory = "no"
 
-#[[adfh.fields]]
-#id = "my awesome status" # this id only exist in ADFH file, make unique
-#name = "status"
-#type = "choice"
-#options = [ "rejected", "approved", "deny",]
-#mandatory = "no"
+[[adfh.fields]]
+id = "my awesome status" # this id only exist in ADFH file, make unique
+name = "status"
+type = "choice"
+options = [ "rejected", "approved", "deny",]
+mandatory = "no"
 
 [[adfh.fields]]
 id = "my awesome view" # this id only exist in ADFH file, make unique
@@ -66,6 +72,11 @@ assign = "my awesome id" # Assign the field for the model from adfh.fields.
 [[adfh.models.properties]]
 model = "my awesome Item"
 assign = "my awesome title"
+
+[[adfh.models.properties]]
+model = "my awesome Item"
+assign = "my awesome status"
+
 
 [[adfh.models]] # It the same as recored, class, database model, etc....
 id = "my awesome Company" # this id only exist in ADFH file, make unique
@@ -197,6 +208,14 @@ adfh:
     mandatory: 'no'
     name: is_done
     type: checkbox
+  - id: my awesome status
+    mandatory: 'no'
+    name: status
+    options:
+    - rejected
+    - approved
+    - deny
+    type: choice
   - id: my awesome view
     mandatory: 'no'
     name: view
@@ -209,6 +228,8 @@ adfh:
     - assign: my awesome id
       model: my awesome Item
     - assign: my awesome title
+      model: my awesome Item
+    - assign: my awesome status
       model: my awesome Item
     text: A todo item
   - id: my awesome Company
@@ -334,6 +355,39 @@ def test_find_field_fail(tmp_path: pathlib.PosixPath) -> None:
     assert "id" in field
     assert "name" in field
     assert "type" in field
+
+
+def test_get_all_field_with_certain_type_successfully(
+    tmp_path: pathlib.PosixPath,
+) -> None:
+    """It exits with a status code of zero."""
+    create_adfh_file(directory_path=tmp_path)
+    data, _ = read_adfh_file(file=pathlib.Path(tmp_path) / "adfh.toml")
+    ihsan_type = IhsanType(**data)
+    fields = get_all_field_with_certain_type(
+        fields=ihsan_type.adfh.fields_list, keyword="choice"
+    )
+
+    assert type(fields) == list
+    assert fields[0].id == "my awesome status"
+    assert fields[0].name == "status"
+    assert fields[0].type == "choice"
+    assert fields[0].options == ["rejected", "approved", "deny"]
+    assert fields[0].mandatory == "no"
+
+
+def test_get_all_field_with_certain_type_fail(
+    tmp_path: pathlib.PosixPath,
+) -> None:
+    """It exits with a status code of zero."""
+    create_adfh_file(directory_path=tmp_path)
+    data, _ = read_adfh_file(file=pathlib.Path(tmp_path) / "adfh.toml")
+    ihsan_type = IhsanType(**data)
+    fields = get_all_field_with_certain_type(
+        fields=ihsan_type.adfh.fields_list, keyword="not choice"
+    )
+
+    assert fields == []
 
 
 def test_find_model_successfully(tmp_path: pathlib.PosixPath) -> None:

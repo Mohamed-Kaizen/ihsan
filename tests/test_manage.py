@@ -43,12 +43,12 @@ name = "is_done"
 type = "checkbox"
 mandatory = "no"
 
-#[[adfh.fields]]
-#id = "my awesome status" # this id only exist in ADFH file, make unique
-#name = "status"
-#type = "choice"
-#options = [ "rejected", "approved", "deny",]
-#mandatory = "no"
+[[adfh.fields]]
+id = "my awesome status" # this id only exist in ADFH file, make unique
+name = "status"
+type = "choice"
+options = [ "rejected", "approved", "deny",]
+mandatory = "no"
 
 [[adfh.fields]]
 id = "my awesome view" # this id only exist in ADFH file, make unique
@@ -69,6 +69,11 @@ assign = "my awesome id" # Assign the field for the model from adfh.fields.
 [[adfh.models.properties]]
 model = "my awesome Item"
 assign = "my awesome title"
+
+[[adfh.models.properties]]
+model = "my awesome Item"
+assign = "my awesome status"
+
 
 [[adfh.models]] # It the same as recored, class, database model, etc....
 id = "my awesome Company" # this id only exist in ADFH file, make unique

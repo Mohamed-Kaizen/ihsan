@@ -82,6 +82,21 @@ def find_action(actions: List[ADFHActionsType], keyword: str) -> List[Dict[str, 
     return [action.dict() for action in actions if action.type == keyword]
 
 
+def get_all_field_with_certain_type(
+    fields: List[ADFHFieldsType], keyword: str
+) -> List[ADFHFieldsType]:
+    """Get all field with a certain type.
+
+    Args:
+        fields: List of ADFHFieldsType model.
+        keyword: word or the type that has been required.
+
+    Returns:
+        List of selected fields.
+    """
+    return [ADFHFieldsType(**field.dict()) for field in fields if field.type == keyword]
+
+
 def find_field(
     fields: List[ADFHFieldsType], field_id: str
 ) -> Union[ADFHFieldsType, str]:
@@ -97,7 +112,10 @@ def find_field(
     field_dict = {}
     for field in fields:
         if field.id == field_id:
-            data_type = sdl_data_type_converter(field.type)
+            if field.type == "choice":
+                data_type = f"{field.name.capitalize()}Type"
+            else:
+                data_type = sdl_data_type_converter(field.type)
             field_dict.update(
                 {
                     "id": field.id,
