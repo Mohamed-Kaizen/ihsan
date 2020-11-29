@@ -86,6 +86,7 @@ name = "todoList"
 type = "show me list"  # Telling what kind of operation.
 model = "my awesome Item" # Telling that this property is blong to a model X.
 text = "list todo items"
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome list of company" # this id only exist in ADFH file, make unique
@@ -93,6 +94,7 @@ name = "CompanyList"
 type = "show me list"
 model = "my awesome Company"
 text = "list of Company"
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome todo" # this id only exist in ADFH file, make unique
@@ -101,6 +103,7 @@ type = "show me a certain item"
 model = "my awesome Item"
 subject = "my awesome id"  # Telling to search with this field or lookup by that field. Note the field should be inside the model # noqa B950
 text = "show the detail of a todo."
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome add todo" # this id only exist in ADFH file, make unique
@@ -108,6 +111,7 @@ name = "todoAdd"
 type = "let me add"
 model = "my awesome Item"
 text = "creating new todo."
+tags = ["oas"]
 
 [[adfh.actions.input]]
 action = "my awesome add todo"
@@ -120,6 +124,7 @@ type = "let me remove"
 model = "my awesome Company"
 subject = "my awesome id"
 text = "removing a company."
+tags = ["oas"]
 """
 
 YAML_ADFH = """
@@ -128,17 +133,23 @@ adfh:
   - id: my awesome list of todo
     model: my awesome Item
     name: todoList
+    tags:
+    - oas
     text: list todo items
     type: show me list
   - id: my awesome list of company
     model: my awesome Company
     name: CompanyList
+    tags:
+    - oas
     text: list of Company
     type: show me list
   - id: my awesome todo
     model: my awesome Item
     name: todoDetail
     subject: my awesome id
+    tags:
+    - oas
     text: show the detail of a todo.
     type: show me a certain item
   - id: my awesome add todo
@@ -147,12 +158,16 @@ adfh:
       assign: my awesome title
     model: my awesome Item
     name: todoAdd
+    tags:
+    - oas
     text: creating new todo.
     type: let me add
   - id: my awesome remove company
     model: my awesome Company
     name: companyRemove
     subject: my awesome id
+    tags:
+    - oas
     text: removing a company.
     type: let me remove
   extra:

@@ -57,6 +57,7 @@ class ADFHActionsType(BaseModel):
     input: Optional[List[ADFHActionsInputType]]
     subject: Optional[str]
     text: Optional[str]
+    tags: Optional[List[str]]
 
 
 class ADFHType(BaseModel):

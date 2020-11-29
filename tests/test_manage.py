@@ -89,6 +89,7 @@ name = "todoList"
 type = "show me list"  # Telling what kind of operation.
 model = "my awesome Item" # Telling that this property is blong to a model X.
 text = "list todo items"
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome list of company" # this id only exist in ADFH file, make unique
@@ -96,6 +97,7 @@ name = "CompanyList"
 type = "show me list"
 model = "my awesome Company"
 text = "list of Company"
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome todo" # this id only exist in ADFH file, make unique
@@ -104,6 +106,7 @@ type = "show me a certain item"
 model = "my awesome Item"
 subject = "my awesome id"  # Telling to search with this field or lookup by that field. Note the field should be inside the model # noqa B950
 text = "show the detail of a todo."
+tags = ["oas"]
 
 [[adfh.actions]]
 id = "my awesome add todo" # this id only exist in ADFH file, make unique
@@ -111,6 +114,7 @@ name = "todoAdd"
 type = "let me add"
 model = "my awesome Item"
 text = "creating new todo."
+tags = ["oas"]
 
 [[adfh.actions.input]]
 action = "my awesome add todo"
@@ -123,6 +127,7 @@ type = "let me remove"
 model = "my awesome Company"
 subject = "my awesome id"
 text = "removing a company."
+tags = ["oas"]
 """
 
 
