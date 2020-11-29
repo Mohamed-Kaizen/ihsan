@@ -170,6 +170,7 @@ def test_sdl_succeeds(tmp_path: pathlib.PosixPath) -> None:
     assert "type Query" in result.stdout
     assert "todoList: [Item]" in result.stdout
     assert "CompanyList: [Company]" in result.stdout
+    assert "todoDetail(id: String, ): Item" in result.stdout
     assert "type Mutation" in result.stdout
     assert "todoAdd(title: String!, ): Item" in result.stdout
     assert "companyRemove(id: String, ): Company" in result.stdout

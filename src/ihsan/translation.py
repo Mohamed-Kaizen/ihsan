@@ -14,6 +14,7 @@ def to_sdl(schema: IhsanType, indention: int = 4) -> str:
         SDL aka Graphql schema.
     """
     show_me_list = find_action(schema.adfh.actions, "show me list")
+    show_me_certain_item = find_action(schema.adfh.actions, "show me a certain item")
     let_me_remove = find_action(schema.adfh.actions, "let me remove")
     let_me_add = find_action(schema.adfh.actions, "let me add")
     choices = get_all_field_with_certain_type(schema.adfh.fields_list, "choice")
@@ -39,6 +40,14 @@ def to_sdl(schema: IhsanType, indention: int = 4) -> str:
         model = find_model(schema.adfh.models, item.get("model"))
         placeholder = f"{item.get('name')}: [{model.name}]\n"
         text += placeholder.rjust(len(placeholder) + indention)
+
+    for item in show_me_certain_item:
+        placeholder = f"{item.get('name')}("
+        text += placeholder.rjust(len(placeholder) + indention)
+        field = find_field(schema.adfh.fields_list, item.get("subject"))
+        text += f"{field.name}: {field.type}{field.mandatory}, "
+        model = find_model(schema.adfh.models, item.get("model"))
+        text += f"): {model.name}\n"
     text += "}\n"
 
     text += "type Mutation {\n"
