@@ -44,7 +44,9 @@ nav:
   - Reference:
       - Manage: "reference/manage.md"
       - Schema: "reference/schema.md"
-      - Translation: "reference/translation.md"
+      - SDL:
+        - Core: "reference/sdl/core.md"
+        - Utils: "reference/sdl/utils.md"
       - Utils: "reference/utils.md"
 
 
