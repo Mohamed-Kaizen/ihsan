@@ -20,7 +20,7 @@ class ADFHFieldsType(BaseModel):
     name: str
     type: str
     mandatory: str = "no"
-    options: Optional[List]
+    options: Optional[List[str]]
     text: Optional[str]
 
 
@@ -36,7 +36,7 @@ class ADFHModelsType(BaseModel):
 
     id: str
     name: str
-    properties: Optional[List[ADFHModelsPropertiesType]]
+    properties: List[ADFHModelsPropertiesType]
     text: Optional[str]
 
 
@@ -57,6 +57,7 @@ class ADFHActionsType(BaseModel):
     input: Optional[List[ADFHActionsInputType]]
     subject: Optional[str]
     text: Optional[str]
+    tags: Optional[List[str]]
 
 
 class ADFHType(BaseModel):
