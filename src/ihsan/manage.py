@@ -18,6 +18,36 @@ def version() -> None:
     console.print(f"{project_name} Version: {__version__}", style="bold green")
 
 
+@app.command("json")
+def json(
+    file: str,
+    output: str = typer.Option(None, help="save output into a file."),
+) -> None:
+    """Generate json from ADFH file.
+
+    Args:
+        file: Path to ADFH file.
+        output: If --output is used, it will save it in file.
+    """
+    console = Console()
+    data = read_adfh_file(file=file)
+
+    if type(data) == str:
+        console.print(data, style="bold red")
+
+    else:
+        ihsan_type = IhsanType(**data)  # type: ignore
+
+        if output:
+            typer.confirm(
+                f"The output will be saved in {output}, are you sure?", abort=True
+            )
+            with open(output, "w") as output_file:
+                output_file.write(ihsan_type.json())
+        else:
+            console.print(ihsan_type.json(), style="bold green")
+
+
 @app.command("sdl")
 def sdl(
     file: str,

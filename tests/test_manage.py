@@ -74,3 +74,35 @@ def test_sdl_output_succeeds(tmp_path: pathlib.PosixPath, toml_adfh: str) -> Non
         "Use -> https://app.graphqleditor.com/ to test the schema :)" in result.stdout
     )
     assert sdl_output_file.exists() is True
+
+
+def test_json_succeeds(
+    tmp_path: pathlib.PosixPath,
+    toml_adfh: str,
+) -> None:
+    """It exits with a status code of zero."""
+    create_adfh_file(directory_path=tmp_path, adfh=toml_adfh)
+    data = pathlib.Path(tmp_path) / "adfh.toml"
+    result = runner.invoke(app, ["json", data.as_posix()])
+
+    assert "adfh" in result.stdout
+
+
+def test_json_fail(tmp_path: pathlib.PosixPath) -> None:
+    """It exits with a status code of zero."""
+    data = pathlib.Path(tmp_path) / "adfh.toml"
+    result = runner.invoke(app, ["json", data.as_posix()])
+    assert "File doesn't exist." in result.stdout
+
+
+def test_json_output_succeeds(tmp_path: pathlib.PosixPath, toml_adfh: str) -> None:
+    """It exits with a status code of zero."""
+    create_adfh_file(directory_path=tmp_path, adfh=toml_adfh)
+    adfh_file = pathlib.Path(tmp_path) / "adfh.toml"
+    sdl_output_file = pathlib.Path(tmp_path) / "test_json.json"
+    runner.invoke(
+        app,
+        ["json", adfh_file.as_posix(), "--output", sdl_output_file.as_posix()],
+        input="y\n",
+    )
+    assert sdl_output_file.exists() is True
