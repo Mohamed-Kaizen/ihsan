@@ -8,7 +8,7 @@
 [![Tests](https://github.com/Mohamed-Kaizen/ihsan/workflows/Tests/badge.svg)](https://github.com/Mohamed-Kaizen/ihsan/actions?query=workflow%Tests)
 [![Coverage](https://codecov.io/gh/Mohamed-Kaizen/ihsan/branch/master/graph/badge.svg)](https://codecov.io/gh/Mohamed-Kaizen/ihsan)
 [![downloads](https://img.shields.io/pypi/dm/ihsan.svg)](https://pypistats.org/packages/ihsan)
-[![versions](https://img.shields.io/pypi/pyversions/ihsan.svg)](https://github.com/samuelcolvin/ihsan)
+[![versions](https://img.shields.io/pypi/pyversions/ihsan.svg)](https://github.com/Mohamed-Kaizen/ihsan)
 [![license](https://img.shields.io/github/license/Mohamed-Kaizen/ihsan.svg)](https://github.com/Mohamed-Kaizen/ihsan/blob/master/LICENSE)
 
 ## Overview
