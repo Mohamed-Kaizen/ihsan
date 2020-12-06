@@ -1,0 +1,160 @@
+[adfh]
+version = "1.0"
+
+[[adfh.extra]] # An Extending the ADFH Language, eg. for OpenAPI
+type = "metadata"
+name = "version"
+value = "1.0.0"
+
+[[adfh.extra]]
+type = "metadata"
+name = "title"
+value = "TODO project."
+
+[[adfh.extra]]
+type = "metadata"
+name = "description"
+value = "Behold TODO."
+
+[[adfh.extra]]
+type = "metadata"
+name = "host"
+value = "todos.io"
+
+[[adfh.extra]]
+type = "metadata"
+name = "base path"
+value = "/v1"
+
+[[adfh.extra]]
+type = "metadata"
+name = "tags"
+
+[[adfh.extra.value]]
+name = "todos"
+text = "Operations with todos."
+
+[[adfh.extra]]
+type = "metadata"
+name = "servers"
+
+[[adfh.extra.value]]
+name = "https://development.gigantic-server.com/v1"
+text = "Development server."
+
+[[adfh.extra.value]]
+name = "https://api.gigantic-server.com/v1"
+text = "Production server."
+
+[[adfh.extra]]
+type = "metadata"
+name = "license"
+
+[[adfh.extra.value]]
+name = "MIT"
+text = "https://opensource.org/licenses/MIT"
+
+[[adfh.fields]] # Well it say fields so it may be field inside class, database, Rest API, Graphql, etc....
+id = "SESzx@#" # this id only exist in ADFH language, make it unique
+name = "id"
+type = "unique id" # the type of the field, eg. unique id, text, number, checkbox, etc....
+mandatory = "no" # Either this field is required or not. Note the defualt is no.
+unique = "yes" # Either this field is unique or not. Note the defualt is no.
+text = "A unique id" # Description of the field. Note this field is optional
+
+[[adfh.fields]]
+id = "DR$DHS" # this id only exist in ADFH Language, make it unique
+name = "title"
+type = "text"
+mandatory = "yes"
+unique = "no"
+min_length = 5 # restrict the min length of text. Note this field only work when the type of the field equal to text
+max_length = 100 # restrict the max length of text. Note this field only work when the type of the field equal to text
+text = "The title of a todo"
+
+[[adfh.fields]]
+id = "#$DF%" # this id only exist in ADFH Language, make it unique
+name = "is_done"
+type = "checkbox"
+defualt = false # defualt value.
+
+[[adfh.fields]]
+id = "TSDE$$3" # this id only exist in ADFH Language, make it unique
+name = "timestamp"
+type = "timestamp"  # timestamp will generate create at and update at fields, depend on the output.
+
+[[adfh.models]] # It the same as record, class, database model, etc....
+id = "D$RT$#3re" # this id only exist in ADFH Language, make it unique
+name = "Todo"
+use = ["database", "validation"] # Tell or restrict this model, for now the options are: database, validation. Note if this field not provide it will use the all the options
+text = "A todo model"
+
+[[adfh.models.properties]] # It the same as class, rest api fields, etc....
+model = "D$RT$#3re" # Telling that this property or field is blong to a model X.
+assign = "SESzx@#" # Assign the field for a model from adfh.fields.
+
+[[adfh.models.properties]]
+model = "D$RT$#3re"
+assign = "DR$DHS"
+
+[[adfh.models.properties]]
+model = "D$RT$#3re"
+assign = "#$DF%"
+
+[[adfh.models.properties]]
+model = "D$RT$#3re"
+assign = "TSDE$$3"
+
+[[adfh.actions]] # Operations
+id = "L$E#W&" # this id only exist in ADFH Language, make it unique
+name = "todoList"
+type = "list"  # Telling what kind of operation is this action.
+model = "D$RT$#3re" # Telling that this property is blong to a model X.
+text = "list todos"
+tags = ["todos"] # Optional
+
+[[adfh.actions]]
+id = "DE$%^" # this id only exist in ADFH Language, make it unique
+name = "todoDetail"
+type = "detail"
+model = "D$RT$#3re"
+parameter = "SESzx@#"  # Telling to search with this field or lookup by that field eg./{id}. Note the field should be inside the model
+text = "show the detail of a todo."
+tags = ["todos"]
+
+[[adfh.actions]]
+id = "A$R^&U" # this id only exist in ADFH Language, make it unique
+name = "todoAdd"
+type = "add"
+model = "D$RT$#3re"
+text = "creating new todo."
+tags = ["todos"]
+
+[[adfh.actions.input]] # input field for the action to work.
+action = "A$R^&U"
+assign = "DR$DHS"
+
+[[adfh.actions]]
+id = "U#$E%F" # this id only exist in ADFH Language, make unique
+name = "todoUpdate"
+type = "update"
+model = "D$RT$#3re"
+text = "update a todo."
+tags = ["todos"]
+
+[[adfh.actions.input]]
+action = "U#$E%F"
+assign = "DR$DHS"
+
+[[adfh.actions.input]]
+action = "U#$E%F"
+assign = "#$DF%"
+
+[[adfh.actions]]
+id = "R#$#%ER" # this id only exist in ADFH Language, make unique
+name = "companyRemove"
+type = "remove"
+model = "D$RT$#3re"
+parameter = "SESzx@#"  # Telling to search with this field or lookup by that field eg./{id}. Note the field should be inside the model
+text = "removing a company."
+tags = ["user"]

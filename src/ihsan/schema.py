@@ -1,7 +1,14 @@
 """Collection of schemas."""
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
+
+
+class ADFHExtraNestType(BaseModel):
+    """Schema for ADFH extra tag."""
+
+    name: str
+    text: str
 
 
 class ADFHExtraType(BaseModel):
@@ -9,8 +16,7 @@ class ADFHExtraType(BaseModel):
 
     type: str
     name: str
-    value: str
-    tags: Optional[List[str]]
+    value: Union[str, List[ADFHExtraNestType]]
 
 
 class ADFHFieldsType(BaseModel):

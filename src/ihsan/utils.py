@@ -32,3 +32,16 @@ def read_adfh_file(file: str) -> Union[MutableMapping[str, Any], str]:
             return "You can only pick toml or yaml file."
     else:
         return "File doesn't exist."
+
+
+def apply_indention(*, text: str, indention: int) -> str:
+    """Apply indention on given text.
+
+    Args:
+          text: The text to apply the indention on.
+          indention: Number of the indention.
+
+    Returns:
+          The indented text.
+    """
+    return text.rjust(len(text) + indention)
