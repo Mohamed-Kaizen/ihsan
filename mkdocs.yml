@@ -41,6 +41,7 @@ plugins:
 
 nav:
   - Home: 'index.md'
+  - RoadMap: 'roadmap.md'
   - Reference:
       - Manage: "reference/manage.md"
       - Schema: "reference/schema.md"
